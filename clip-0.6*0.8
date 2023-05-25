@@ -1,0 +1,73 @@
+import 'package:flutter/material.dart';
+
+class one_page extends StatefulWidget {
+  const one_page({Key? key}) : super(key: key);
+
+  @override
+  State<one_page> createState() => _one_pageState();
+}
+
+class _one_pageState extends State<one_page> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+
+          ClipPath(
+            clipper: bg(),
+            child:    Container(
+              height:  MediaQuery.of(context).size.height * 0.6,
+
+              width:  MediaQuery.of(context).size.width * 0.8,
+              decoration: BoxDecoration(
+                color: Colors.red,
+                  gradient: LinearGradient(
+                      colors: [
+                        Colors.black,
+                        Colors.red
+
+                      ],
+                      end: Alignment.bottomRight,
+                      begin: Alignment.topLeft
+
+                  )
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+}
+class bg extends CustomClipper<Path>
+{
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+    var roundnessFactor = 50.0;
+    path.moveTo(0,size.height * 0.33);
+    path.lineTo(0, size.height - roundnessFactor);
+
+    path.quadraticBezierTo( 0,size.height, size.width - roundnessFactor , size.height);
+    path.lineTo( size.width -roundnessFactor , size.height);
+    path.quadraticBezierTo( size.width, size.height,size.width , size.height -roundnessFactor);
+    path.lineTo(size.width, roundnessFactor *2);
+    path.quadraticBezierTo( size.width, 0,size.width -roundnessFactor *3 , roundnessFactor *2);
+    path.lineTo(roundnessFactor, size.height *0.33 +10);
+    path.quadraticBezierTo( 0, size.height *0.33 + roundnessFactor,0,size.height *0.33 + roundnessFactor *2);
+
+    // path.lineTo(5,size.height);
+    // path.lineTo(size.width, size.height);
+    // path.lineTo(size.width, 0);
+   return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}
